@@ -69,6 +69,7 @@ export default {
         ],
         // required 只能检测 null undefined "" 不能检测布尔值
         isAgree: [{
+          // 自定义校验规则
           validator:(rule,value,callback) => {
             // rule：检验规则
             // value：检验的值
@@ -84,11 +85,12 @@ export default {
     login(){
       this.$refs.form.validate((isOK)=>{
         if(isOK){
-          alert("校验通过")
+          this.$store.dispatch("user/login",this.loginForm)
+          
         }
       })
 
-    }
+    },
   }
 };
 </script>
