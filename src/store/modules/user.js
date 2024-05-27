@@ -37,7 +37,9 @@ const actions= {
   },
   //退出登录的action
   logout(context){
+    // 触发名为 removeToken 的 mutation，用于清除 token
     context.commit("removeToken")  // 删除token
+    //  触发名为 setUserInfo 的 mutation，并传递一个空对象 {}，用于清除用户信息。
     context.commit("setUserInfo",{}) //设置用户信息为空对象即删除用户信息
   }
 }
