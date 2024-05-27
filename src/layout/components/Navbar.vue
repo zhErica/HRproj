@@ -8,7 +8,8 @@
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
           <!-- 显示头像 -->
-          <img :src="avatar" class="user-avatar">
+          <img v-if="avatar" :src="avatar" class="user-avatar">
+          <span class="username" v-else>{{ name?.charAt(2) }}</span>
           <!-- 显示用户名称 -->
           <span class="name">{{ name }}</span>
           <!-- 图标 -->
@@ -136,6 +137,17 @@ export default {
           cursor: pointer;
           margin-right: 10px;
           font-size: 16px;
+        }
+        .username{
+          width: 30px;
+          height: 30px;
+          line-height: 30px;
+          text-align: center;
+          background-color: #04c9be;
+          color: #fff;
+          font-size: 18px;
+          border-radius: 50%;
+          margin-right: 4px;
         }
         .el-icon-setting{
           cursor: pointer;
