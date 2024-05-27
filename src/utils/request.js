@@ -42,6 +42,5 @@ service.interceptors.response.use((response)=>{
   //error.message
   Message({type:'error',message: error.message})
   return Promise.reject(error)
-
 })
 export default service
