@@ -15,7 +15,8 @@
             <el-col>{{data.name }}</el-col>
             <el-col :span="4">
               <span class="tree-manager">{{data.managerName}}</span>
-              <el-dropdown @command="operateDept">
+              <!-- $event 实参 表示类型 -->
+              <el-dropdown @command="operateDept($event,data.id)">
                 <!-- 显示区域内容 -->
                 <span class="el-dropdown-link">
                   操作<i class="el-icon-arrow-down el-icon--right"></i>
@@ -35,7 +36,7 @@
     <!-- 放置弹层组件 -->
     <!-- .sync表示会接收子组件的事件 update:showDialog, 值 赋给属性 
     sync 修饰符表示双向绑定。它允许子组件在需要时改变这个值，并将改变传回父组件-->
-    <add-dept :showDialog.sync="showDialog"/>
+    <add-dept :current-node-id="currentNodeId" :showDialog.sync="showDialog"/>
   </div>
 </template>
 
@@ -48,6 +49,7 @@ export default {
   components:{AddDept},
   data() {
     return {
+      currentNodeId:null, //存储当前部门的id
       showDialog:false,// 控制弹层的显示与隐藏
       depts: [], //数据属性
       defaulProps: {
@@ -66,10 +68,11 @@ export default {
         this.depts =transListToTreeData(result,0) 
     },
     // 操作部门的方法
-    operateDept(type){
+    operateDept(type,id){
       if (type === 'add'){
         //添加子部门
         this.showDialog =true //显示弹层组件
+        this.currentNodeId = id
       }
     }
   }
