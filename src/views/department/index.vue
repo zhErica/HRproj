@@ -36,7 +36,7 @@
     <!-- 放置弹层组件 -->
     <!-- .sync表示会接收子组件的事件 update:showDialog, 值 赋给属性 
     sync 修饰符表示双向绑定。它允许子组件在需要时改变这个值，并将改变传回父组件-->
-    <add-dept :current-node-id="currentNodeId" :showDialog.sync="showDialog"/>
+    <add-dept @updateDepartment="getDepartment" :current-node-id="currentNodeId" :showDialog.sync="showDialog"/>
   </div>
 </template>
 
