@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import {getDepartment} from '@/api/department'
+import {getDepartment,delDepartment} from '@/api/department'
 import {transListToTreeData } from '@/utils'
 import AddDept from './components/add-dept.vue'
 export default {
@@ -84,6 +84,14 @@ export default {
         // 父组件调用子组件获取数据--- ref 可以获取dom的实例对象 也可以获取自定义组件的实例对象
         this.$nextTick(()=>{
           this.$refs.addDept.getDepartmentDetail()    //this.$refs.addDept等同于子组件的this
+        })
+      }else{
+        // 删除部门
+        this.$confirm("您确定要删除该部门吗？").then(async()=>{
+          await delDepartment(id)
+          // 提示消息
+          this.$message.success("删除部门成功")
+          this.getDepartment()
         })
       }
     }
