@@ -2,7 +2,7 @@
   <div class="container">
     <div class="app-container">
       <!-- 展示树形结构 -->
-      <el-tree default-expand-all :data="depts" :props="defaulProps" :expand-on-click-node="false">
+      <el-tree default-expand-all :data="depts" :props="defaultProps" :expand-on-click-node="false">
         <!-- 节点结构 -->
         <!-- 作用域插槽 v-slot="{node, data}" 只能作用在template -->
         <template v-slot="{data}">
@@ -16,7 +16,7 @@
             <el-col :span="4">
               <span class="tree-manager">{{data.managerName}}</span>
               <!-- $event 实参 表示类型 -->
-              <el-dropdown @command="operateDept($event,data.id)">
+              <el-dropdown @command="operateDept($event,data.id)" trigger="click">
                 <!-- 显示区域内容 -->
                 <span class="el-dropdown-link">
                   操作<i class="el-icon-arrow-down el-icon--right"></i>
@@ -36,7 +36,8 @@
     <!-- 放置弹层组件 -->
     <!-- .sync表示会接收子组件的事件 update:showDialog, 值 赋给属性 
     sync 修饰符表示双向绑定。它允许子组件在需要时改变这个值，并将改变传回父组件-->
-    <add-dept @updateDepartment="getDepartment" :current-node-id="currentNodeId" :showDialog.sync="showDialog"/>
+    <add-dept ref="addDept" @updateDepartment="getDepartment" :current-node-id="currentNodeId" :showDialog.sync="showDialog"/> 
+    <!--  ref="addDept" 为 <add-dept> 组件设置了一个引用名称 addDept。 -->
   </div>
 </template>
 
@@ -52,7 +53,7 @@ export default {
       currentNodeId:null, //存储当前部门的id
       showDialog:false,// 控制弹层的显示与隐藏
       depts: [], //数据属性
-      defaulProps: {
+      defaultProps: {
         label: "name", //要显示的字段名称
         children: "children", // 读取子节点的字段名
       },
@@ -73,6 +74,17 @@ export default {
         //添加子部门
         this.showDialog =true //显示弹层组件
         this.currentNodeId = id
+      }else if(type === 'edit'){
+        //编辑部门场景
+        this.showDialog = true
+        this.currentNodeId = id  // 记录id 后要用它获取数据
+        // 更新props --异步动作
+        // 直接调用子组件的方法 同步的方法
+        // 要在子组件获取数据 
+        // 父组件调用子组件获取数据--- ref 可以获取dom的实例对象 也可以获取自定义组件的实例对象
+        this.$nextTick(()=>{
+          this.$refs.addDept.getDepartmentDetail()    //this.$refs.addDept等同于子组件的this
+        })
       }
     }
   }

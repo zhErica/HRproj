@@ -27,7 +27,6 @@
         > 
         <!-- 下拉选项 循环负责人数据 生成下拉 label表示显示的字段 value表示存储的字段-->
         <el-option v-for="item in managerList" :key="item.id" :label="item.username" :value="item.id"></el-option>
-
       </el-select>
       </el-form-item>
       <el-form-item prop="introduce" label="部门介绍">
@@ -55,7 +54,7 @@
 </template>
 
 <script>
-import {getDepartment, getManagerList,addDepartment} from '@/api/department'
+import {getDepartment, getDepartmentDetail,getManagerList,addDepartment} from '@/api/department'
 export default {
   props: {
     showDialog: {
@@ -163,7 +162,11 @@ export default {
           this.close()
         }
       })
-    }
+    },
+    // 获取组织的详情
+    async getDepartmentDetail(){
+      this.formData = await getDepartmentDetail(this.currentNodeId)
+     }
   },
 };
 </script>
