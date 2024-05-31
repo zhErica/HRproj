@@ -52,16 +52,17 @@
     <!-- 放置弹层 -->
     <el-dialog title="新增弹层" :visible.sync ='showDialog' width="500px">
       <!-- 表单内容 -->
-      <el-form label-width="120px">
-        <el-form-item label="角色名称">
-          <el-input style="width: 300px;" size="mini"></el-input>
+      <el-form ref="roleForm" label-width="120px" :model="roleForm" :rules="rules">
+        <el-form-item prop="name" label="角色名称">
+          <el-input v-model="roleForm.name" style="width: 300px;" size="mini"></el-input>
         </el-form-item>
         <el-form-item label="启用">
-          <el-switch></el-switch>
+          <!-- 如果不需要校验，就不用写prop属性 -->
+          <el-switch v-model="roleForm.state" :active-value="1" :inactive-value="0"></el-switch>
         </el-form-item>
-        <el-form-item label="角色描述">
+        <el-form-item prop="description" label="角色描述">
+          <el-input v-model="roleForm.description" type="textarea" :rows="3" style="width: 300px;" size="mini"></el-input>  
           <!-- :rows="3" 设置文本域为3行 -->
-          <el-input type="textarea" :rows="3" style="width: 300px;" size="mini"></el-input>  
         </el-form-item>
         <!-- 确认与取消按钮 -->
         <el-form-item>
@@ -91,6 +92,21 @@ export default {
         pagesize: 5, // 每页多少条
         total: 0,
       },
+      // 弹层表单
+      roleForm:{
+        name:'',
+        description:'',
+        state:0, //默认未启用状态 关闭是0 打开是1
+      },
+      // 弹层表单校验
+      rules:{
+        name:[{
+          required:true,message:'角色名称不能为空',trigger:'blur'
+        }],
+        description:[{
+          required:true,message:'角色描述不能为空',trigger:'blur'
+        }]
+      }
     };
   },
   created() {
