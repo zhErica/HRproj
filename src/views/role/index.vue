@@ -3,7 +3,7 @@
     <div class="app-container">
       <!-- 角色管理内容 -->
       <div class="role-operate">
-        <el-button type="primary" size="mini">添加角色</el-button>
+        <el-button type="primary" size="mini" @click="showDialog = true">添加角色</el-button>
       </div>
       <!-- 放置表格 -->
       <el-table :data="list">
@@ -49,6 +49,31 @@
         </el-pagination>
       </el-row>
     </div>
+    <!-- 放置弹层 -->
+    <el-dialog title="新增弹层" :visible.sync ='showDialog' width="500px">
+      <!-- 表单内容 -->
+      <el-form label-width="120px">
+        <el-form-item label="角色名称">
+          <el-input style="width: 300px;" size="mini"></el-input>
+        </el-form-item>
+        <el-form-item label="启用">
+          <el-switch></el-switch>
+        </el-form-item>
+        <el-form-item label="角色描述">
+          <!-- :rows="3" 设置文本域为3行 -->
+          <el-input type="textarea" :rows="3" style="width: 300px;" size="mini"></el-input>  
+        </el-form-item>
+        <!-- 确认与取消按钮 -->
+        <el-form-item>
+          <el-row type="flex" justify="center">
+            <el-col :span="12">
+              <el-button size="mini" type="primary">确认</el-button>
+              <el-button size="mini">取消</el-button>
+            </el-col>
+          </el-row>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -58,6 +83,8 @@ export default {
   data() {
     return {
       list: [],
+      // 控制弹层的显示与隐藏
+      showDialog: false,
       // 将分页信息放入一个对象中 便于管理
       pageParams: {
         page: 1, //第几页
