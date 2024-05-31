@@ -50,14 +50,14 @@
       </el-row>
     </div>
     <!-- 放置弹层 -->
-    <el-dialog title="新增弹层" :visible.sync ='showDialog' width="500px">
+    <el-dialog title="新增弹层" :visible.sync ='showDialog' @close="btnCancel" width="500px">
       <!-- 表单内容 -->
       <el-form ref="roleForm" label-width="120px" :model="roleForm" :rules="rules">
         <el-form-item prop="name" label="角色名称">
           <el-input v-model="roleForm.name" style="width: 300px;" size="mini"></el-input>
         </el-form-item>
-        <el-form-item label="启用">
-          <!-- 如果不需要校验，就不用写prop属性 -->
+        <el-form-item label="启用" prop="state">
+          <!-- 如果不需要校验，就不用写prop属性  但是重置表单时 需要将数据恢复初始值状态就又需要prop属性-->
           <el-switch v-model="roleForm.state" :active-value="1" :inactive-value="0"></el-switch>
         </el-form-item>
         <el-form-item prop="description" label="角色描述">
@@ -68,8 +68,8 @@
         <el-form-item>
           <el-row type="flex" justify="center">
             <el-col :span="12">
-              <el-button size="mini" type="primary">确认</el-button>
-              <el-button size="mini">取消</el-button>
+              <el-button @click="btnOK" size="mini" type="primary">确认</el-button>
+              <el-button @click="btnCancel" size="mini">取消</el-button>
             </el-col>
           </el-row>
         </el-form-item>
@@ -78,7 +78,7 @@
   </div>
 </template>
 <script>
-import { getRoleList } from "@/api/role";
+import { getRoleList, addRole } from "@/api/role";
 export default {
   name: "Role",
   data() {
@@ -122,7 +122,21 @@ export default {
     changePage(newPage){
       this.pageParams.page = newPage // 赋值当前页码
       this.getRoleList()
-
+    },
+    // 确认与取消按钮
+    btnOK(){
+      this.$refs.roleForm.validate(async isOK=>{
+        if(isOK){
+          await addRole(this.roleForm)
+          this.$message.success('确定新增角色成功')
+          this.getRoleList()
+          this.btnCancel()
+        }
+      })
+    },
+    btnCancel(){
+      this.$refs.roleForm.resetFields()  // 重置表单数据
+      this.showDialog = false // 关闭弹层
     }
   },
 };

@@ -8,3 +8,11 @@ export function getRoleList(params){
         params
     })
 }
+// 新增角色
+export function addRole(data){
+    return request({
+        url:'/sys/role',
+        method:'POST',
+        data
+    })
+}
