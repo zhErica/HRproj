@@ -1,18 +1,27 @@
 import request from "@/utils/request"
 
 // 获取角色列表
-export function getRoleList(params){
+export function getRoleList(params) {
     return request({
-        url:'/sys/role',
-        method:'GET',
+        url: '/sys/role',
+        method: 'GET',
         params
     })
 }
 // 新增角色
-export function addRole(data){
+export function addRole(data) {
     return request({
-        url:'/sys/role',
-        method:'POST',
+        url: '/sys/role',
+        method: 'POST',
+        data
+    })
+}
+
+// 更新角色
+export function updateRole(data) {
+    return request({
+        url: `/sys/role/${data.id}`,
+        method: 'PUT',
         data
     })
 }
