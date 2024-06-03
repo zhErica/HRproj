@@ -2,9 +2,24 @@
   <div class="container">
     <div class="app-container">
       <div class="left">
-        <el-input style="margin-bottom:10px" type="text" prefix-icon="el-icon-search" size="small" placeholder="输入员工姓名全员搜索" />
+        <el-input
+          style="margin-bottom: 10px"
+          type="text"
+          prefix-icon="el-icon-search"
+          size="small"
+          placeholder="输入员工姓名全员搜索"
+        />
         <!-- 树形组件 -->
-        <el-tree :data="depts" :props="defaultProps" default-expand-all :expand-on-click-node="false" :highlight-current="true">
+        <el-tree
+          ref="deptTree"
+          node-key="id"
+          :data="depts"
+          :props="defaultProps"
+          default-expand-all
+          :expand-on-click-node="false"
+          :highlight-current="true"
+          @current-change ='selectNode'
+        >
         </el-tree>
       </div>
       <div class="right">
@@ -21,30 +36,44 @@
 </template>
 
 <script>
-import { getDepartment} from '@/api/department'
-import{transListToTreeData} from '@/utils'
+import { getDepartment } from "@/api/department";
+import { transListToTreeData } from "@/utils";
 export default {
-  name: 'Employee',
-  data(){
+  name: "Employee",
+  data() {
     return {
-      depts:[], // 组织数据
-      defaultProps:{
-        label:'name',
-        children :'children'
-      }
-    }
+      depts: [], // 组织数据
+      defaultProps: {
+        label: "name",
+        children: "children",
+      },
+      // 存储查询参数
+      queryParams: {
+        departmentId: null,
+      },
+    };
   },
-  created(){
-    this.getDepartment()
+  created() {
+    this.getDepartment();
   },
-  methods:{
-    async getDepartment(){
+  methods: {
+    async getDepartment() {
       // 调用api接口
       // 递归方法 将列表转化为树形
-      this.depts =transListToTreeData(await getDepartment(),0) 
+      this.depts = transListToTreeData(await getDepartment(), 0);
+      this.queryParams.departmentId = this.depts[0].id;
+      // 设置选中节点
+      //树组件渲染是异步的 等到更新完毕
+      this.$nextTick(() => {
+        // 此时意味着树渲染完毕
+        this.$refs.deptTree.setCurrentKey(this.queryParams.departmentId);
+      });
+    },
+    selectNode(node){
+      this.queryParams.departmentId = node.id
     }
-  }
-}
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -60,7 +89,7 @@ export default {
     flex: 1;
     padding: 20px;
     .opeate-tools {
-      margin:10px ;
+      margin: 10px;
     }
     // .username {
     //   height: 30px;
@@ -75,5 +104,4 @@ export default {
     // }
   }
 }
-
 </style>
