@@ -249,7 +249,7 @@ export default {
     async confirmDel(id){
       await delRole(id)
       this.$message.success("删除成功")
-      // 删除的如果是最后一个
+      // 判断删除的是不是最后一个
       if(this.list.length === 1) this.pageParams.page--
       // 重新加载数据
       this.getRoleList()
