@@ -3,11 +3,13 @@
     <div class="app-container">
       <div class="left">
         <el-input
+          v-model="queryParams.keyword"
           style="margin-bottom: 10px"
           type="text"
           prefix-icon="el-icon-search"
           size="small"
           placeholder="输入员工姓名全员搜索"
+          @input="changeValue"
         />
         <!-- 树形组件 -->
         <el-tree
@@ -30,25 +32,46 @@
         </el-row>
         <!-- 表格组件 -->
         <el-table :data="list">
-          <el-table-column  prop="staffPhoto" align="center" label="头像">
-            <template v-slot="{row}">
-              <el-avatar v-if="row.staffPhoto" :src="row.staffPhoto" :size="30"></el-avatar>
+          <el-table-column prop="staffPhoto" align="center" label="头像">
+            <template v-slot="{ row }">
+              <el-avatar
+                v-if="row.staffPhoto"
+                :src="row.staffPhoto"
+                :size="30"
+              ></el-avatar>
               <span v-else class="username">{{ row.username.charAt(2) }}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="username" label="姓名"></el-table-column>
-          <el-table-column prop="mobile" label="手机号" sortable></el-table-column>
-          <el-table-column prop="workNumber" label="工号" sortable></el-table-column>
-          <el-table-column prop="formOfEmployment" label="聘用形式">
-            <template v-slot="{row}">
+          <el-table-column prop="username" label="姓名" align="center"></el-table-column>
+          <el-table-column
+            prop="mobile"
+            label="手机号"
+            width="120px"
+            sortable
+            align="center"
+          ></el-table-column>
+          <el-table-column
+            prop="workNumber"
+            label="工号"
+            width="120px"
+            sortable
+            align="center"
+          ></el-table-column>
+          <el-table-column prop="formOfEmployment" label="聘用形式" align="center">
+            <template v-slot="{ row }">
               <span v-if="row.formOfEmployment === 1">正式</span>
               <span v-else-if="row.formOfEmployment === 2">非正式</span>
               <span v-else>无</span>
             </template>
           </el-table-column>
-          <el-table-column prop="departmentName" label="部门" ></el-table-column>
-          <el-table-column prop="timeOfEntry" label="入职时间" sortable ></el-table-column>
-          <el-table-column label="操作" width="280px" align="center">
+          <el-table-column prop="departmentName" label="部门" align="center"></el-table-column>
+          <el-table-column
+            prop="timeOfEntry"
+            label="入职时间"
+            width="120px"
+            sortable
+          ></el-table-column>
+          <el-table-column label="操作" width="240px" align="center">
             <template>
               <el-button type="text" size="mini">查看</el-button>
               <el-button type="text" size="mini">角色</el-button>
@@ -59,12 +82,12 @@
         <!-- 分页 -->
         <el-row align="middle" style="height: 60px" type="flex" justify="end">
           <!-- : 是属性 @ 是事件 -->
-          <el-pagination 
-          layout="total,prev, pager, next" 
-          :total="total" 
-          :current-page="queryParams.page" 
-          :page-size="queryParams.pagesize"
-          @current-change="changePage"
+          <el-pagination
+            layout="total,prev, pager, next"
+            :total="total"
+            :current-page="queryParams.page"
+            :page-size="queryParams.pagesize"
+            @current-change="changePage"
           >
           </el-pagination>
         </el-row>
@@ -76,7 +99,7 @@
 <script>
 import { getDepartment } from "@/api/department";
 import { transListToTreeData } from "@/utils";
-import { getEmployeeList } from '@/api/employee';
+import { getEmployeeList } from "@/api/employee";
 export default {
   name: "Employee",
   data() {
@@ -89,11 +112,12 @@ export default {
       // 存储查询参数
       queryParams: {
         departmentId: null,
-        page:1, // 当前页码
-        pagesize:10
+        page: 1, // 当前页码
+        pagesize: 10,
+        keyword: "",
       },
-      total:0, //记录员工的总数
-      list:[] //存储员工列表数据
+      total: 0, //记录员工的总数
+      list: [], //存储员工列表数据
     };
   },
   created() {
@@ -112,24 +136,35 @@ export default {
         this.$refs.deptTree.setCurrentKey(this.queryParams.departmentId);
       });
       // 此时 参数记录了id
-      this.getEmployeeList()
+      this.getEmployeeList();
     },
     selectNode(node) {
-      this.queryParams.departmentId = node.id // 重新记录了参数
-      this.queryParams.page=1 // 设置为第一页
-      this.getEmployeeList() // 重新加载数据
+      this.queryParams.departmentId = node.id; // 重新记录了参数
+      this.queryParams.page = 1; // 设置为第一页
+      this.getEmployeeList(); // 重新加载数据
     },
     // 封装获取员工列表的方法
-    async getEmployeeList(){
-      const {rows,total} = await getEmployeeList(this.queryParams)
-      this.list = rows
-      this.total = total
+    async getEmployeeList() {
+      const { rows, total } = await getEmployeeList(this.queryParams);
+      this.list = rows;
+      this.total = total;
     },
     // 切换页码事件
-    changePage(newPage){
-      this.queryParams.page = newPage  // 赋值新页码
-      this.getEmployeeList() //查询数据
-    }
+    changePage(newPage) {
+      this.queryParams.page = newPage; // 赋值新页码
+      this.getEmployeeList(); //查询数据
+    },
+    changeValue() {
+      // this.queryParams.page = 1;
+      // this.getEmployeeList();
+      // 防抖： 单位时间内只执行最后一次
+      // this的实例上赋值了一个timer属性
+      clearTimeout(this.timer)  // 清理上一次的定时器
+      this.timer = setTimeout(() => {
+        this.queryParams.page = 1;
+        this.getEmployeeList();
+      }, 500);
+    },
   },
 };
 </script>
@@ -156,9 +191,9 @@ export default {
       text-align: center;
       border-radius: 50%;
       color: #fff;
-      background: #04C9BE;
+      background: #04c9be;
       font-size: 12px;
-      display:inline-block;
+      display: inline-block;
     }
   }
 }
