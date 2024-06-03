@@ -13,26 +13,46 @@
           align="center"
           width="200px"
           label="角色"
-        ></el-table-column>
+        >
+        <template v-slot="{row}">
+          <!-- 条件判断 -->
+          <el-input v-if="row.isEdit" size="mini"></el-input>
+          <span v-else>{{ row.name }}</span>
+        </template>
+        </el-table-column>
+
         <el-table-column prop="state" align="center" width="200px" label="启用">
           <!-- 自定义列结构 -->
           <template v-slot="{ row }">
-            <span>{{
-              row.state === 1 ? "已启用" : row.state === 0 ? "未启用" : "无"
-            }}</span>
+            <el-switch v-if="row.isEdit"></el-switch>
+            <span v-else>{{row.state === 1 ? "已启用" : row.state === 0 ? "未启用" : "无"}}</span>
           </template>
         </el-table-column>
         <el-table-column
           prop="description"
           align="center"
           label="描述"
-        ></el-table-column>
+        >
+        <template v-slot="{row}">
+        <el-input v-if="row.isEdit" type="textarea"></el-input>
+        <span v-else>{{ row.description }}</span>
+        </template>
+      
+        </el-table-column>
         <el-table-column align="center" label="操作">
           <!-- 放置操作按钮 -->
-          <template>
+          <template v-slot="{row}">
+            <template v-if="row.isEdit">
+              <!--  编辑状态 -->
+              <el-button size="mini" type="primary">确定</el-button>
+              <el-button size="mini">取消</el-button>
+            </template>
+            <template v-else>
+              <!-- 非编辑状态 -->
             <el-button type="text" size="mini">分配权限</el-button>
-            <el-button type="text" size="mini">编辑</el-button>
+            <el-button type="text" size="mini" @click="btnEditRow(row)">编辑</el-button>
             <el-button type="text" size="mini">删除</el-button>
+          </template>
           </template>
         </el-table-column>
       </el-table>
@@ -117,6 +137,14 @@ export default {
       const { rows, total } = await getRoleList(this.pageParams);
       this.list = rows; // 赋值数据
       this.pageParams.total = total;
+      // 针对每一行 添加一个编辑的标记
+      this.list.forEach(item=>{
+        // item.isEdit = false // 添加一个属性
+        // 数据响应式问题 数据变化 视图更新
+        // 添加的动态属性 不具备响应式特点
+        // this.$set(目标对象，属性名称，初始值) 可以对目标对象添加属性 添加响应式
+        this.$set(item,'isEdit',false)
+      })
     },
     // 切换分页时 请求新的数据
     changePage(newPage){
@@ -137,6 +165,10 @@ export default {
     btnCancel(){
       this.$refs.roleForm.resetFields()  // 重置表单数据
       this.showDialog = false // 关闭弹层
+    },
+    // 点击编辑行
+    btnEditRow(row){
+      row.isEdit=true //改变行的编辑状态
     }
   },
 };
