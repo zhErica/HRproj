@@ -9,3 +9,12 @@ export function getEmployeeList(params){
         params
     })
 }
+
+// 导出员工excel表
+export function exportEmployee(){
+    return request({
+        url:'/sys/user/export',
+        method:'get',
+        responseType:'blob'
+    })
+}
