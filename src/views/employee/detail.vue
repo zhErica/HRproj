@@ -51,7 +51,7 @@
               <el-form-item label="部门" prop="departmentId">
                 <!-- 放置及联部门组件 -->
                 <!-- inputW样式会给到selectTree 中template第一层的组件 -->
-                <select-tree class="inputW"></select-tree>
+                <select-tree class="inputW" v-model="userInfo.departmentId"></select-tree>
               </el-form-item>
             </el-col>
           </el-row>
@@ -129,7 +129,7 @@ export default {
         mobile: "", // 手机号
         workNumber: "", // 工号
         formOfEmployment: null, // 聘用形式
-        departmentId: null, // 部门id
+        departmentId: 2, // 部门id
         timeOfEntry: "", // 入职时间
         correctionTime: "", // 转正时间
       },
