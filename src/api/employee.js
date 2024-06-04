@@ -20,11 +20,20 @@ export function exportEmployee(){
 }
 
 //下载员工的导入模板
-
 export function getExportTemplate(){
     return request({
         url:'/sys/user/import/template',
         method:'get',
         responseType:'blob'
+    })
+}
+
+// 导入员工上传接口
+export function uploadExcel(data){
+    return request({
+        url:'/sys/user/import',
+        method:'POST',
+        data   //  form-data类型 因为要上传文件类型
+
     })
 }
