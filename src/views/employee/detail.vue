@@ -2,12 +2,21 @@
   <div class="dashboard-container">
     <div class="app-container">
       <div class="edit-form">
-        <el-form ref="userForm" :model="userInfo" :rules="rules" label-width="220px">
+        <el-form
+          ref="userForm"
+          :model="userInfo"
+          :rules="rules"
+          label-width="220px"
+        >
           <!-- 姓名 部门 -->
           <el-row>
             <el-col :span="12">
               <el-form-item label="姓名" prop="username">
-                <el-input v-model="userInfo.username" size="mini" class="inputW" />
+                <el-input
+                  v-model="userInfo.username"
+                  size="mini"
+                  class="inputW"
+                />
               </el-form-item>
             </el-col>
           </el-row>
@@ -15,7 +24,12 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="工号" prop="workNumber">
-                <el-input size="mini" v-model="userInfo.workNumber" class="inputW" disabled />
+                <el-input
+                  size="mini"
+                  v-model="userInfo.workNumber"
+                  class="inputW"
+                  disabled
+                />
               </el-form-item>
             </el-col>
           </el-row>
@@ -23,7 +37,11 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="手机" prop="mobile">
-                <el-input v-model="userInfo.mobile" size="mini" class="inputW" />
+                <el-input
+                  v-model="userInfo.mobile"
+                  size="mini"
+                  class="inputW"
+                />
               </el-form-item>
             </el-col>
           </el-row>
@@ -32,6 +50,8 @@
             <el-col :span="12">
               <el-form-item label="部门" prop="departmentId">
                 <!-- 放置及联部门组件 -->
+                <!-- inputW样式会给到selectTree 中template第一层的组件 -->
+                <select-tree class="inputW"></select-tree>
               </el-form-item>
             </el-col>
           </el-row>
@@ -39,9 +59,13 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="聘用形式" prop="formOfEmployment">
-                <el-select v-model="userInfo.formOfEmployment" size="mini" class="inputW">
-                    <el-option label="正式" value="1"></el-option>
-                    <el-option label="非正式" value="2"></el-option>
+                <el-select
+                  v-model="userInfo.formOfEmployment"
+                  size="mini"
+                  class="inputW"
+                >
+                  <el-option label="正式" value="1"></el-option>
+                  <el-option label="非正式" value="2"></el-option>
                 </el-select>
               </el-form-item>
             </el-col>
@@ -60,10 +84,16 @@
               </el-form-item>
             </el-col>
           </el-row>
+          <!-- 转正时间 -->
           <el-row>
             <el-col :span="12">
               <el-form-item label="转正时间" prop="correctionTime">
-                <el-date-picker v-model="userInfo.correctionTime" size="mini" type="date" class="inputW" />
+                <el-date-picker
+                  v-model="userInfo.correctionTime"
+                  size="mini"
+                  type="date"
+                  class="inputW"
+                />
               </el-form-item>
             </el-col>
           </el-row>
@@ -78,7 +108,9 @@
           <!-- 保存个人信息 -->
           <el-row type="flex">
             <el-col :span="12" style="margin-left: 220px">
-              <el-button size="mini" type="primary" @click="saveData">保存更新</el-button>
+              <el-button size="mini" type="primary" @click="saveData"
+                >保存更新</el-button
+              >
             </el-col>
           </el-row>
         </el-form>
@@ -87,7 +119,9 @@
   </div>
 </template>
  <script>
+import SelectTree from "./components/select-tree.vue";
 export default {
+  components: { SelectTree },
   data() {
     return {
       userInfo: {
