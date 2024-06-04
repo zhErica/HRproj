@@ -72,10 +72,15 @@
             sortable
           ></el-table-column>
           <el-table-column label="操作" width="240px" align="center">
-            <template>
+            <template v-slot="{row}">
               <el-button type="text" size="mini">查看</el-button>
               <el-button type="text" size="mini">角色</el-button>
-              <el-button type="text" size="mini">删除</el-button>
+              <!-- 删除员工数据--气泡确认框 -->
+              <el-popconfirm 
+              title="确定删除该员工数据吗？" 
+              @onConfirm="confirmDel(row.id)">
+                <el-button style="margin-left: 10px;" type="text" size="mini" slot="reference">删除</el-button>
+              </el-popconfirm>
             </template>
           </el-table-column>
         </el-table>
@@ -101,7 +106,7 @@
 <script>
 import { getDepartment } from "@/api/department";
 import { transListToTreeData } from "@/utils";
-import { getEmployeeList,exportEmployee } from "@/api/employee";
+import { getEmployeeList,exportEmployee,delEmployee } from "@/api/employee";
 import FileSaver from "file-saver";
 import ImportExcel from './components/import-excel.vue';
 export default {
@@ -178,6 +183,15 @@ export default {
       console.log(result);
       // FileSaver.saveAs(blob对象，文件名称)
       FileSaver.saveAs(result,'员工信息表.xlsx')  // 下载文件
+    },
+    // 删除员工
+    async confirmDel(id){
+      await delEmployee(id)
+      this.$message.success("删除成功")
+      // 判断删除的是不是最后一个
+      if(this.list.length === 1 && this.queryParams.page > 1) this.pageParams.page--
+      // 重新加载数据
+      this.getEmployeeList()
     }
   },
 };

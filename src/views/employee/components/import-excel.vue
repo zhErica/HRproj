@@ -70,6 +70,7 @@ export default {
           await uploadExcel(data); // 此调用函数需要参数 --form-data类型
           // 成功
           this.$emit("uploadSuccess"); // 通知父组件 上传成功
+          this.$message.success("上传成功")
           this.$emit("update:showExcelDialog", false); // 关闭弹层
           // this.$refs['excel-upload-input'].value = ''
         } catch (error) {
