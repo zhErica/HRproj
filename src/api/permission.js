@@ -6,3 +6,11 @@ export function getPermissionList() {
     })
     
 }
+
+//删除 权限
+export function delPermission(id){
+    return request({
+        url:`/sys/permission/${id}`,
+        method:'DELETE'
+    })
+}
