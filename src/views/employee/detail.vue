@@ -8,7 +8,7 @@
           :rules="rules"
           label-width="220px"
         >
-          <!-- 姓名 部门 -->
+          <!-- 姓名 -->
           <el-row>
             <el-col :span="12">
               <el-form-item label="姓名" prop="username">
@@ -20,7 +20,7 @@
               </el-form-item>
             </el-col>
           </el-row>
-          <!-- 工号 入职时间 -->
+          <!-- 工号  -->
           <el-row>
             <el-col :span="12">
               <el-form-item label="工号" prop="workNumber">
@@ -33,11 +33,13 @@
               </el-form-item>
             </el-col>
           </el-row>
-          <!--手机 聘用形式  -->
+          <!--手机  -->
+          
           <el-row>
             <el-col :span="12">
               <el-form-item label="手机" prop="mobile">
                 <el-input
+                  :disabled="!!$route.params.id"  
                   v-model="userInfo.mobile"
                   size="mini"
                   class="inputW"
@@ -120,7 +122,7 @@
 </template>
  <script>
 import SelectTree from "./components/select-tree.vue";
-import {addEmployee,getEmployeeDetail} from '@/api/employee'
+import {addEmployee,getEmployeeDetail,updateEmployee} from '@/api/employee'
 export default {
   components: { SelectTree },
   data() {
@@ -139,8 +141,8 @@ export default {
           { required: true, message: "请输入姓名", trigger: "blur" },
           {
             min: 1,
-            max: 4,
-            message: "姓名为1-4位",
+            max: 6,
+            message: "姓名为1-6位",
           },
         ],
         mobile: [
@@ -191,8 +193,16 @@ export default {
     saveData() {
       this.$refs.userForm.validate(async isOK =>{
         if(isOK){
-          await addEmployee(this.userInfo)
-          this.$message.success('新增员工成功')
+          // 判断当前是否为编辑模式
+          if(this.$route.params.id){
+            // 编辑模式
+            await updateEmployee(this.userInfo)
+            this.$message.success('更新员工成功')
+          }else{
+            // 新增模式
+            await addEmployee(this.userInfo)
+            this.$message.success('新增员工成功')
+          }
           this.$router.push('/employee')
         }
       });
