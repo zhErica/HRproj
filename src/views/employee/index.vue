@@ -73,7 +73,7 @@
           ></el-table-column>
           <el-table-column label="操作" width="240px" align="center">
             <template v-slot="{row}">
-              <el-button type="text" size="mini">查看</el-button>
+              <el-button type="text" size="mini" @click="$router.push(`/employee/detail/${row.id}`)">查看</el-button>
               <el-button type="text" size="mini">角色</el-button>
               <!-- 删除员工数据--气泡确认框 -->
               <el-popconfirm 

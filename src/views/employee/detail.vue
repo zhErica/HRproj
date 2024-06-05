@@ -120,7 +120,7 @@
 </template>
  <script>
 import SelectTree from "./components/select-tree.vue";
-import {addEmployee} from '@/api/employee'
+import {addEmployee,getEmployeeDetail} from '@/api/employee'
 export default {
   components: { SelectTree },
   data() {
@@ -130,7 +130,7 @@ export default {
         mobile: "", // 手机号
         workNumber: "", // 工号
         formOfEmployment: null, // 聘用形式
-        departmentId: 2, // 部门id
+        departmentId: null, // 部门id
         timeOfEntry: "", // 入职时间
         correctionTime: "", // 转正时间
       },
@@ -178,7 +178,16 @@ export default {
       },
     };
   },
+  created(){
+    //如何获取路由参数中的id
+    // console.log(this.$route.params.id);
+    if (this.$route.params.id) {this.getEmployeeDetail()}  // if判断
+    // this.$route.params.id && getEmployeeDetail()  // 逻辑运算
+  },
   methods: {
+    async getEmployeeDetail(){
+      this.userInfo = await getEmployeeDetail(this.$route.params.id)
+    },
     saveData() {
       this.$refs.userForm.validate(async isOK =>{
         if(isOK){
@@ -189,6 +198,7 @@ export default {
       });
     },
   },
+
 };
 </script>
   
