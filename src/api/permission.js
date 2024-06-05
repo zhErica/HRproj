@@ -6,6 +6,15 @@ export function getPermissionList() {
     })
     
 }
+// 新增权限
+export function addPermission(data){
+    return request({
+        url:'/sys/permission',
+        method:'POST',
+        data
+    })
+}
+    
 
 //删除 权限
 export function delPermission(id){

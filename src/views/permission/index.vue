@@ -23,6 +23,7 @@
     <el-dialog
       title="新增权限"
       :visible.sync="showDialog"
+      @close="btnCancel"
       width="500px">
       <el-form ref="permissionForm" :model="permissionForm" :rules="rules" label-width="120px">
         <el-form-item label="权限名称" prop="name">
@@ -41,8 +42,8 @@
         <el-form-item>
           <el-row type="flex" justify="center">
             <el-col  :span="12">
-              <el-button size="mini" type="primary" >确定</el-button>
-              <el-button size="mini">取消</el-button>
+              <el-button size="mini" type="primary" @click="btnOK">确定</el-button>
+              <el-button size="mini" @click="btnCancel">取消</el-button>
             </el-col>
           </el-row>
         </el-form-item>
@@ -51,7 +52,7 @@
   </div>
 </template>
 <script>
-import { getPermissionList,delPermission } from "@/api/permission";
+import { getPermissionList,addPermission,delPermission } from "@/api/permission";
 import { transListToTreeData } from "@/utils/index";
 export default {
   name: "Permission",
@@ -73,9 +74,7 @@ export default {
         code:[{required:true,message:'权限标识不能为空',trigger:'blur'}],
         description:[],
         enVisible:[]
-
-      }
-      
+      }   
     };
   },
   created() {
@@ -85,13 +84,28 @@ export default {
     async getPermissionList() {
       this.list = transListToTreeData(await getPermissionList(), 0); //将列表数据转换成树形
     },
-
+    // 确认按钮
+    btnOK(){
+      this.$refs.permissionForm.validate(async isOK =>{
+        if(isOK){
+          await addPermission(this.permissionForm)
+          this.$message.success("新增权限成功")
+          this.getPermissionList();
+          this.btnCancel()
+        }
+      })
+    },
+    // 取消按钮
+    btnCancel(){
+      this.$refs.permissionForm.resetFields()
+      this.showDialog=false
+    },
     // 删除
     async confirmDel(id){
       await delPermission(id)
       this.$message.success("删除成功")
       // 判断删除的是不是最后一个
-      if(this.list.length === 1) this.pageParams.page--
+      // if(this.list.length === 1) this.pageParams.page--
       // 重新加载数据
       this.getPermissionList()
     }
