@@ -33,3 +33,10 @@ export function delRole(id) {
         method:'DELETE',
     })
 }
+
+// 获取角色详情
+export function getRoleDetail(id) {
+    return request ({
+        url:`/sys/role/${id}`
+    })
+}

@@ -58,7 +58,7 @@
             </template>
             <template v-else>
               <!-- 非编辑状态 -->
-              <el-button type="text" size="mini" @click="btnPermission">分配权限</el-button>
+              <el-button type="text" size="mini" @click="btnPermission(row.id)">分配权限</el-button>
               <el-button type="text" size="mini" @click="btnEditRow(row)">编辑</el-button>
               <el-popconfirm title="确定删除当前角色吗？" @onConfirm="confirmDel(row.id)">
                 <el-button style="margin-left: 10px;" type="text" size="mini" slot="reference">删除</el-button>
@@ -135,13 +135,18 @@
     <!-- 放置权限弹层 -->
     <el-dialog :visible.sync="showPermissionDialog" title="分配权限">
       <!-- 放置权限数据 -->
-      <el-tree :data="permissionData" :props="{label:'name'}" show-checkbox default-expand-all>
+      <el-tree node-key="id" 
+      :data="permissionData" 
+      :props="{label:'name'}" 
+      show-checkbox 
+      default-expand-all
+      :default-checked-keys="permIds">
       </el-tree>
     </el-dialog>
   </div>
 </template>
 <script>
-import { getRoleList, addRole, updateRole, delRole } from "@/api/role";
+import { getRoleList, addRole, updateRole, delRole,getRoleDetail } from "@/api/role";
 import {getPermissionList} from '@/api/permission'
 import { transListToTreeData} from '@/utils'
 export default {
@@ -182,6 +187,8 @@ export default {
       },
       showPermissionDialog:false,
       permissionData:[],
+      currentRoleId:null,
+      permIds:[]
     };
   },
   created() {
@@ -264,9 +271,12 @@ export default {
       // 重新加载数据
       this.getRoleList()
     },
-    async btnPermission(){
-      this.showPermissionDialog=true
+    async btnPermission(id){   
+      this.currentRoleId = id
+      const {permIds} = await getRoleDetail(id)
+      this.permIds = permIds
       this.permissionData = transListToTreeData(await getPermissionList(),0)  // 获取权限数据
+      this.showPermissionDialog=true
     }
   },
 };
