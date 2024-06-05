@@ -24,18 +24,19 @@
       title="新增权限"
       :visible.sync="showDialog"
       width="500px">
-      <el-form label-width="120px">
-        <el-form-item label="权限名称">
-          <el-input style="width:300px" size="mini"></el-input>
+      <el-form ref="permissionForm" :model="permissionForm" :rules="rules" label-width="120px">
+        <el-form-item label="权限名称" prop="name">
+          <el-input v-model="permissionForm.name" style="width:300px" size="mini"></el-input>
         </el-form-item>
-        <el-form-item label="权限标识">
-          <el-input style="width:300px" size="mini"></el-input>
+        <el-form-item label="权限标识" prop="code">
+          <el-input v-model="permissionForm.code" style="width:300px" size="mini"></el-input>
         </el-form-item>
-        <el-form-item label="权限描述">
-          <el-input style="width:300px" size="mini" :rows="2" type="textarea"></el-input>
+        <el-form-item label="权限描述" prop="description">
+          <el-input v-model="permissionForm.description" style="width:300px" size="mini" :rows="2" type="textarea"></el-input>
         </el-form-item>
-        <el-form-item label="开启" >
-          <el-switch></el-switch>
+        <el-form-item label="开启" prop="enVisible" >
+          <!--:active-value="1" 写冒号后面是数字 不带：是字符串  -->
+          <el-switch v-model="permissionForm.enVisible" active-value="1" inactive-value="0"></el-switch>
         </el-form-item>
         <el-form-item>
           <el-row type="flex" justify="center">
@@ -58,6 +59,23 @@ export default {
     return {
       showDialog:false, //控制弹层显示与隐藏
       list: [],
+      // 权限表单
+      permissionForm:{
+        name: "",
+        code: "",
+        description: "",
+        type: 0,
+        pid: 0,
+        enVisible: "0"  // 0关闭 打开为1
+      },
+      rules:{
+        name:[{required:true,message:'权限名称不能为空',trigger:'blur'}],
+        code:[{required:true,message:'权限标识不能为空',trigger:'blur'}],
+        description:[],
+        enVisible:[]
+
+      }
+      
     };
   },
   created() {
