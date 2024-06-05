@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="app-container">
-      <el-button size="mini" type="primary" class="btn-add">添加权限</el-button>
+      <el-button class="btn-add" size="mini" type="primary"  @click="showDialog = true">添加权限</el-button>
       <!-- 表格 -->
       <el-table :data="list" row-key="id" default-expand-all>
         <el-table-column prop="name" label="名称"></el-table-column>
@@ -19,6 +19,34 @@
         </el-table-column>
       </el-table>
     </div>
+    <!-- 弹层 -->
+    <el-dialog
+      title="新增权限"
+      :visible.sync="showDialog"
+      width="500px">
+      <el-form label-width="120px">
+        <el-form-item label="权限名称">
+          <el-input style="width:300px" size="mini"></el-input>
+        </el-form-item>
+        <el-form-item label="权限标识">
+          <el-input style="width:300px" size="mini"></el-input>
+        </el-form-item>
+        <el-form-item label="权限描述">
+          <el-input style="width:300px" size="mini" :rows="2" type="textarea"></el-input>
+        </el-form-item>
+        <el-form-item label="开启" >
+          <el-switch></el-switch>
+        </el-form-item>
+        <el-form-item>
+          <el-row type="flex" justify="center">
+            <el-col  :span="12">
+              <el-button size="mini" type="primary" >确定</el-button>
+              <el-button size="mini">取消</el-button>
+            </el-col>
+          </el-row>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -28,6 +56,7 @@ export default {
   name: "Permission",
   data() {
     return {
+      showDialog:false, //控制弹层显示与隐藏
       list: [],
     };
   },
