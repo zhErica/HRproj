@@ -78,3 +78,12 @@ export function getEnableRoleList(){
         method:'GET'
     })
 }
+
+// 分配员工角色
+export function assignRole(data){
+    return request({
+        url:'/sys/user/assignRoles',
+        method:'PUT',
+        data
+    })
+}
