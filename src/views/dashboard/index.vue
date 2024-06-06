@@ -6,14 +6,16 @@
         <div class="panel">
           <!-- 个人信息 -->
           <div class="user-info">
-            <img v-if="avatar" class="avatar" :src="avatar" alt="">
+            <img v-if="avatar" class="avatar" :src="avatar" alt="" />
             <span v-else class="username">{{ name?.charAt(2) }}</span>
             <div class="company-info">
               <div class="title">
                 江苏传智播客教育科技股份有限公司
                 <span>体验版</span>
               </div>
-              <div class="depart">{{ name }} ｜ {{company}}-{{ departmentName }}</div>
+              <div class="depart">
+                {{ name }} ｜ {{ company }}-{{ departmentName }}
+              </div>
             </div>
           </div>
           <!-- 代办 -->
@@ -21,37 +23,65 @@
             <div class="todo-item">
               <span>组织总人数</span>
               <!-- 起始值 终点值  滚动时间 -->
-              <count-to :start-val="0" :end-val="homeData.employeeTotal" :duration="1000">
+              <count-to
+                :start-val="0"
+                :end-val="homeData.employeeTotal"
+                :duration="1000"
+              >
               </count-to>
             </div>
             <div class="todo-item">
               <span>正式员工</span>
-              <count-to :start-val="0" :end-val="homeData.regularEmployeeTotal" :duration="1000">
+              <count-to
+                :start-val="0"
+                :end-val="homeData.regularEmployeeTotal"
+                :duration="1000"
+              >
               </count-to>
             </div>
             <div class="todo-item">
               <span>合同待签署</span>
-              <count-to :start-val="0" :end-val="homeData.contractSignTotal" :duration="1000">
+              <count-to
+                :start-val="0"
+                :end-val="homeData.contractSignTotal"
+                :duration="1000"
+              >
               </count-to>
             </div>
             <div class="todo-item">
               <span>待入职</span>
-              <count-to :start-val="0" :end-val="homeData.toBeEmployed" :duration="1000">
+              <count-to
+                :start-val="0"
+                :end-val="homeData.toBeEmployed"
+                :duration="1000"
+              >
               </count-to>
             </div>
             <div class="todo-item">
               <span>本月待转正</span>
-              <count-to :start-val="0" :end-val="homeData.toBeConfirmed" :duration="1000">
+              <count-to
+                :start-val="0"
+                :end-val="homeData.toBeConfirmed"
+                :duration="1000"
+              >
               </count-to>
             </div>
             <div class="todo-item">
               <span>本月待离职</span>
-              <count-to :start-val="0" :end-val="homeData.toBeDismissed" :duration="1000">
+              <count-to
+                :start-val="0"
+                :end-val="homeData.toBeDismissed"
+                :duration="1000"
+              >
               </count-to>
             </div>
             <div class="todo-item">
               <span>接口总访问</span>
-              <count-to :start-val="0" :end-val="homeData.interfaceAccessTotal" :duration="1000">
+              <count-to
+                :start-val="0"
+                :end-val="homeData.interfaceAccessTotal"
+                :duration="1000"
+              >
               </count-to>
             </div>
           </div>
@@ -89,29 +119,49 @@
             <div class="chart-info">
               <div class="info-main">
                 <span>申报人数</span>
-                <count-to :start-val="0" :end-val="homeData.socialInsurance?.declarationTotal" :duration="1000">
-              </count-to>
+                <count-to
+                  :start-val="0"
+                  :end-val="homeData.socialInsurance?.declarationTotal"
+                  :duration="1000"
+                >
+                </count-to>
               </div>
               <div class="info-list">
                 <div class="info-list-item">
                   <span>待申报(人)</span>
-                  <count-to :start-val="0" :end-val="homeData.socialInsurance?.toDeclareTotal" :duration="1000">
+                  <count-to
+                    :start-val="0"
+                    :end-val="homeData.socialInsurance?.toDeclareTotal"
+                    :duration="1000"
+                  >
                   </count-to>
                 </div>
                 <div class="info-list-item">
                   <span>申报中(人)</span>
-                  <count-to :start-val="0" :end-val="homeData.socialInsurance?.declaringTotal" :duration="1000">
+                  <count-to
+                    :start-val="0"
+                    :end-val="homeData.socialInsurance?.declaringTotal"
+                    :duration="1000"
+                  >
                   </count-to>
                 </div>
                 <div class="info-list-item">
                   <span>已申报(人)</span>
-                  <count-to :start-val="0" :end-val="homeData.socialInsurance?.declaredTotal" :duration="1000">
+                  <count-to
+                    :start-val="0"
+                    :end-val="homeData.socialInsurance?.declaredTotal"
+                    :duration="1000"
+                  >
                   </count-to>
                 </div>
               </div>
             </div>
             <div class="chart">
               <!-- 图表 -->
+              <div
+                ref="social"
+                style="width: 100%; height: 100%"
+              ></div>
             </div>
           </div>
         </div>
@@ -122,29 +172,48 @@
             <div class="chart-info">
               <div class="info-main">
                 <span>申报人数</span>
-                <count-to :start-val="0" :end-val="homeData.providentFund?.declarationTotal" :duration="1000">
+                <count-to
+                  :start-val="0"
+                  :end-val="homeData.providentFund?.declarationTotal"
+                  :duration="1000"
+                >
                 </count-to>
               </div>
               <div class="info-list">
                 <div class="info-list-item">
                   <span>待申报(人)</span>
-                  <count-to :start-val="0" :end-val="homeData.providentFund?.toDeclareTotal" :duration="1000">
+                  <count-to
+                    :start-val="0"
+                    :end-val="homeData.providentFund?.toDeclareTotal"
+                    :duration="1000"
+                  >
                   </count-to>
                 </div>
                 <div class="info-list-item">
                   <span>申报中(人)</span>
-                  <count-to :start-val="0" :end-val="homeData.providentFund?.declaringTotal" :duration="1000">
+                  <count-to
+                    :start-val="0"
+                    :end-val="homeData.providentFund?.declaringTotal"
+                    :duration="1000"
+                  >
                   </count-to>
                 </div>
                 <div class="info-list-item">
                   <span>已申报(人)</span>
-                  <count-to :start-val="0" :end-val="homeData.providentFund?.declaredTotal" :duration="1000">
+                  <count-to
+                    :start-val="0"
+                    :end-val="homeData.providentFund?.declaredTotal"
+                    :duration="1000"
+                  >
                   </count-to>
                 </div>
               </div>
             </div>
             <div class="chart">
               <!-- 图表 -->
+              <div ref="fund"
+                style="width: 100%; height: 100%"
+              ></div>
             </div>
           </div>
         </div>
@@ -187,8 +256,12 @@
         <div class="panel">
           <div class="panel-title">通知公告</div>
           <div class="information-list">
-            <div v-for="(item,index) in noticeList" :key="index" class="information-list-item">
-              <img :src="item.icon" alt="" >
+            <div
+              v-for="(item, index) in noticeList"
+              :key="index"
+              class="information-list-item"
+            >
+              <img :src="item.icon" alt="" />
               <div>
                 <p>
                   {{ item.notice }}
@@ -204,35 +277,88 @@
 </template>
 
 <script>
-import CountTo from 'vue-count-to'
-import {mapGetters} from 'vuex'
-import{getHomeData,getHomeNotice} from '@/api/home'
+import CountTo from "vue-count-to";
+import { mapGetters } from "vuex";
+import { getHomeData, getHomeNotice } from "@/api/home";
+import * as echarts from "echarts"; // 引入所有echarts
 export default {
   components: {
-    CountTo
+    CountTo,
   },
   data() {
     return {
-      homeData:{} ,//存放首页数据的对象
-      noticeList:[],
+      homeData: {}, //存放首页数据的对象
+      noticeList: [],
+    };
+  },
+  computed: {
+    ...mapGetters(["name", "avatar", "company", "departmentName"]),
+  },
+  watch:{
+    homeData(){
+      this.social.setOption({
+      xAxis: {
+        type: "category",
+        boundaryGap: false,
+        data: this.homeData.socialInsurance?.xAxis
+      },
+      yAxis: {
+        type: "value",
+      },
+      series: [
+        {
+          data: this.homeData.socialInsurance?.yAxis,
+          type: "line",
+          areaStyle: {
+            color:'#04C9BE'
+          },
+          lineStyle:{color:'#04C9BE'}
+        },
+      ],
+    });
+    this.fund.setOption({
+      xAxis: {
+        type: "category",
+        boundaryGap: false,
+        data: this.homeData.providentFund?.xAxis
+      },
+      yAxis: {
+        type: "value",
+      },
+      series: [
+        {
+          data: this.homeData.providentFund?.yAxis,
+          type: "line",
+          areaStyle: {
+            color:'#04C9BE'
+          },
+          lineStyle:{color:'#04C9BE'}
+        },
+      ],
+    });
+
+
     }
   },
-  computed:{
-    ...mapGetters(['name','avatar','company','departmentName'])
+  created() {
+    this.getHomeData();
+    this.getHomeNotice();
   },
-  created(){
-    this.getHomeData()
-    this.getHomeNotice()
+  mounted() {
+    // 获取展示的数据 设置给图标
+    // 需要监听homeData的变化 （异步）
+    this.social= echarts.init(this.$refs.social); //初始化echarts
+    this.fund = echarts.init(this.$refs.fund)
   },
-  methods:{
-    async getHomeData(){
-      this.homeData = await getHomeData()
+  methods: {
+    async getHomeData() {
+      this.homeData = await getHomeData();
     },
-    async getHomeNotice(){
-      this.noticeList = await getHomeNotice()
-    }
-  }
-}
+    async getHomeNotice() {
+      this.noticeList = await getHomeNotice();
+    },
+  },
+};
 </script>
 
 <style scoped lang="scss">
@@ -242,43 +368,44 @@ export default {
   min-height: calc(100vh - 80px);
 
   ::v-deep .el-calendar-day {
-  height:  40px;
- }
- ::v-deep .el-calendar-table__row td,::v-deep .el-calendar-table tr td:first-child, ::v-deep .el-calendar-table__row td.prev{
-  border:none;
- }
-.date-content {
-  height: 40px;
-  text-align: center;
-  line-height: 40px;
-  font-size: 14px;
-}
-.date-content .rest {
-  color: #fff;
-  border-radius: 50%;
-  background: rgb(250, 124, 77);
-  width: 20px;
-  height: 20px;
-  line-height: 20px;
-  display: inline-block;
-  font-size: 12px;
-  margin-left: 10px;
-}
-.date-content .text{
-  width: 20px;
-  height: 20px;
-  line-height: 20px;
- display: inline-block;
-
-}
-::v-deep .el-calendar-table td.is-selected .text{
-   background: #409eff;
-   color: #fff;
-   border-radius: 50%;
- }
- ::v-deep .el-calendar__header {
-   display: none
- }
+    height: 40px;
+  }
+  ::v-deep .el-calendar-table__row td,
+  ::v-deep .el-calendar-table tr td:first-child,
+  ::v-deep .el-calendar-table__row td.prev {
+    border: none;
+  }
+  .date-content {
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    font-size: 14px;
+  }
+  .date-content .rest {
+    color: #fff;
+    border-radius: 50%;
+    background: rgb(250, 124, 77);
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    display: inline-block;
+    font-size: 12px;
+    margin-left: 10px;
+  }
+  .date-content .text {
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    display: inline-block;
+  }
+  ::v-deep .el-calendar-table td.is-selected .text {
+    background: #409eff;
+    color: #fff;
+    border-radius: 50%;
+  }
+  ::v-deep .el-calendar__header {
+    display: none;
+  }
   .container {
     display: flex;
     .right {
@@ -317,16 +444,16 @@ export default {
           line-height: 48px;
           text-align: center;
         }
-         .username {
-           width: 30px;
-           height: 30px;
-           text-align: center;
-           line-height: 30px;
-           border-radius: 50%;
-           background: #04c9be;
-           color: #fff;
-           margin-right: 4px;
-         }
+        .username {
+          width: 30px;
+          height: 30px;
+          text-align: center;
+          line-height: 30px;
+          border-radius: 50%;
+          background: #04c9be;
+          color: #fff;
+          margin-right: 4px;
+        }
         .company-info {
           margin-left: 10px;
           height: 48px;
@@ -396,19 +523,19 @@ export default {
             background: #f5f6f8;
             background-size: cover;
             &.approval {
-              background-image: url('~@/assets/common/approval.png');
+              background-image: url("~@/assets/common/approval.png");
             }
-             &.social {
-              background-image: url('~@/assets/common/social.png');
+            &.social {
+              background-image: url("~@/assets/common/social.png");
             }
-             &.salary {
-              background-image: url('~@/assets/common/salary.png');
+            &.salary {
+              background-image: url("~@/assets/common/salary.png");
             }
             &.role {
-              background-image: url('~@/assets/common/role.png');
+              background-image: url("~@/assets/common/role.png");
             }
-             &.bpm {
-              background-image: url('~@/assets/common/bpm.png');
+            &.bpm {
+              background-image: url("~@/assets/common/bpm.png");
             }
           }
           span {
@@ -422,7 +549,7 @@ export default {
       .chart-container {
         display: flex;
         .chart-info {
-         width: 240px;
+          width: 240px;
           margin-top: 10px;
           .info-main {
             padding: 10px;
@@ -466,7 +593,7 @@ export default {
           }
         }
         .chart {
-          flex:1
+          flex: 1;
         }
       }
       // 帮助链接
@@ -498,13 +625,13 @@ export default {
             i.icon-help {
               background-image: url("~@/assets/common/help.png");
             }
-             i.icon-support {
+            i.icon-support {
               background-image: url("~@/assets/common/support.png");
             }
-             i.icon-add {
+            i.icon-add {
               background-image: url("~@/assets/common/add.png");
             }
-             i.icon-entry {
+            i.icon-entry {
               background-image: url("~@/assets/common/entry.png");
             }
           }
@@ -516,19 +643,19 @@ export default {
         .information-list-item {
           display: flex;
           align-items: center;
-          margin:15px 0;
+          margin: 15px 0;
           img {
             width: 40px;
             height: 40px;
             border: 50%;
           }
-         .col {
-           color: #8a97f8;
-         }
-         div :nth-child(2) {
-          color: #697086;
-          font-size: 14px;
-         }
+          .col {
+            color: #8a97f8;
+          }
+          div :nth-child(2) {
+            color: #697086;
+            font-size: 14px;
+          }
         }
       }
     }
