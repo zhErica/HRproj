@@ -42,7 +42,9 @@ import socialRouter from './modules/social'
  * constantRoutes
  * a base page that does not have permission requirements
  * all roles can be accessed
+ * 静态路由
  */
+
 export const constantRoutes = [
   {
     path: '/login',
@@ -67,6 +69,13 @@ export const constantRoutes = [
       meta: { title: '首页', icon: 'dashboard' }
     }]
   },
+
+  // 404 page must be placed at the end !!!
+  { path: '*', redirect: '/404', hidden: true }
+]
+
+// 动态路由
+export const asyncRouter=[
   departmentRouter,
   roleRouter,
   employeeRouter,
@@ -75,17 +84,12 @@ export const constantRoutes = [
   approvalRouter,
   salaryRouter,
   socialRouter,
-
-  
-
-  // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
 ]
 
 const createRouter = () => new Router({
   // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
-  routes: constantRoutes
+  routes: constantRoutes // 默认引入静态路由
 })
 
 const router = createRouter()
