@@ -3,7 +3,7 @@ import request from '@/utils/request'
 export function getApprovalList(data) {
   return request({
     url: `/user/process/instance/${data.page}/${data.pageSize}`,
-    method: 'put',
+    // method: 'put',
     data
   })
 }
@@ -35,7 +35,7 @@ export function getSetState(params) {
 export function saveSetState(data) {
   return request({
     url: '/approvals/setting',
-    method: 'put',
+    // method: 'put',
     data
   })
 }

@@ -281,6 +281,18 @@ import CountTo from "vue-count-to";
 import { mapGetters } from "vuex";
 import { getHomeData, getHomeNotice } from "@/api/home";
 import * as echarts from "echarts"; // 引入所有echarts
+// // 按需引入
+// import * as echarts from 'echarts/core';// 引入核心包
+// import {lineChart} from 'echarts/charts' // 引入折线图
+// import{ GridComponent} from 'echarts/components' // 引入组件
+// import {CanvasRenderer } from 'echarts/renderers' // 引入canvas渲染器
+// // 注册必须的组件
+// echarts.use([
+//   lineChart,
+//   GridComponent,
+//   CanvasRenderer
+// ])
+
 export default {
   components: {
     CountTo,
@@ -336,8 +348,6 @@ export default {
         },
       ],
     });
-
-
     }
   },
   created() {
