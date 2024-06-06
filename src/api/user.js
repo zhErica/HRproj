@@ -7,7 +7,7 @@ export function login(data){
     data
   })
 }
-// 获取资料的接口
+// 获取用户基本资料
 export function getUserInfo(){
   return request({
     url:"/sys/profile",
