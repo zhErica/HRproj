@@ -5,5 +5,11 @@ import request from '@/utils/request'
     return request({
         url:'/home/data'
     })
+ }
 
+ // 获取首页信息数据
+ export function getHomeNotice(){
+    return request({
+        url:'/home/notice'
+    })
  }
