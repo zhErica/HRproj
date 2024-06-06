@@ -1,6 +1,7 @@
 import {getToken,setToken,removeToken} from '@/utils/auth'
 import {login,getUserInfo} from '@/api/user'
 import {constantRoutes} from '@/router'
+import {resetRouter} from '@/router'
 
 const state ={
   token:getToken(), //从缓存中读取初始值
@@ -48,6 +49,8 @@ const actions= {
     context.commit("removeToken")  // 删除token
     //  触发名为 setUserInfo 的 mutation，并传递一个空对象 {}，用于清除用户信息。
     context.commit("setUserInfo",{}) //设置用户信息为空对象即删除用户信息
+    // 重置路由
+    resetRouter()
   }
 }
 

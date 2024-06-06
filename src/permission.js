@@ -26,7 +26,7 @@ router.beforeEach(async(to,from,next)=>{
            return roles.menus.includes(item.name)
         })// 筛选后的路由
         store.commit("user/setRoutes",filterRoutes)
-        router.addRoutes([...filterRoutes],{ path: '*', redirect: '/404', hidden: true })  // 添加动态路由信息到路由表
+        router.addRoutes([...filterRoutes,{ path: '*', redirect: '/404', hidden: true }])  // 添加动态路由信息到路由表
         // router 添加动态路由信息之后 需要转发一下
         next(to.path)  // 目的是路由拥有信息
       }else{
