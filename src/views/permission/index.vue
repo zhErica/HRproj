@@ -10,7 +10,7 @@
         <el-table-column label="操作">
           <template v-slot="{ row }">
             <el-button v-if="row.type === 1" type="text" size="mini"
-              >添加</el-button>
+            @click="showDialog = true">添加</el-button>
             <el-button type="text" size="mini">编辑</el-button>
             <el-popconfirm title="确定删除当前权限吗？" @onConfirm="confirmDel(row.id)">
                 <el-button style="margin-left: 10px;" type="text" size="mini" slot="reference">删除</el-button>
