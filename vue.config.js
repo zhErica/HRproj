@@ -52,6 +52,11 @@ module.exports = {
       alias: {
         '@': resolve('src')
       }
+    },
+    // 配置 需要排出的包
+    externals:{
+      'vue':'Vue',
+      'element-ui':'ELEMENT'
     }
   },
   chainWebpack(config) {
